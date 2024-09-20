@@ -4,13 +4,31 @@ export interface subreddit_type{
     url: string
     data: []
     display_name:string
+    icon_img:string
+    primary_color: string
 }
+
+export const API_ROOT = 'https://www.reddit.com';
+
+export const getSubredditPosts = async (subreddit:subreddit_type) => {
+  const response = await fetch(`${API_ROOT}${subreddit}.json`);
+  const json = await response.json();
+
+  return json.data.children.map((post) => post.data);
+};
 
 export const getSubreddits = async () => {
-    const response = await fetch('https://www.reddit.com/subreddits.json')
-    const data = await response.json()
-    return data.data.children.map((subreddit:subreddit_type) => subreddit.data)
-}
+  const response = await fetch(`${API_ROOT}/subreddits.json`);
+  const json = await response.json();
 
+  return json.data.children.map((subreddit:subreddit_type) => subreddit.data);
+};
+
+export const getPostComments = async (permalink:string) => {
+  const response = await fetch(`${API_ROOT}${permalink}.json`);
+  const json = await response.json();
+
+  return json[1].data.children.map((subreddit:subreddit_type) => subreddit.data);
+};
 
 
