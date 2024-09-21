@@ -1,6 +1,6 @@
 import { createSlice,createSelector } from "@reduxjs/toolkit";
 import { getSubredditPosts, subreddit_type } from "../api/redditApi";
-import { AppDispatch } from ".";
+import { AppDispatch, RootState } from ".";
 
 const initialState = {
     posts: [],
@@ -74,9 +74,9 @@ export const fetchPosts = (subreddit:subreddit_type) => async (dispatch:AppDispa
   };
   
 
-  const selectPosts = (state) => state.reddit.posts;
-const selectSearchTerm = (state) => state.reddit.searchTerm;
-export const selectSelectedSubreddit = (state) =>
+const selectPosts = (state:RootState) => state.reddit.posts;
+const selectSearchTerm = (state:RootState) => state.reddit.searchTerm;
+export const selectSelectedSubreddit = (state:RootState) =>
   state.reddit.selectedSubreddit;
 
 export const selectFilteredPosts = createSelector(

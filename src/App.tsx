@@ -5,10 +5,10 @@ import Subreddits from './features/Subreddits/Subreddits'
 function App() {
 
   return (
-    <>
-    <Home/>
+    <div className='flex min-h-screen bg-zinc-900'>
+     <Home/>
      <Subreddits/>
-    </>
+    </div>
   )
 }
 

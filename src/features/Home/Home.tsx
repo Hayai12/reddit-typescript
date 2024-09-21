@@ -20,13 +20,17 @@ const Home = () =>{
     },[selectedSubreddit])
 
     return(
-        <>
+        <div className="flex flex-col w-3/4 space-y-4 m-4 bg-zinc-800" >
         {posts.map((post,index)=>(
-            <div className="w-2/3" key={post.id}>
-                {post.name}
+            <div className="bg-white rounded-lg p-4 text-black" key={post.id}>
+                {post.title}
+                <div>
+                    <img src={post.url} alt="" />
+                    {post.author}
+                </div>
             </div>
         ))}
-        </>
+        </div>
     )
 
 }
