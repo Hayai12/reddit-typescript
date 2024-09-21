@@ -1,13 +1,14 @@
 import { createSlice,createSelector } from "@reduxjs/toolkit";
-import { getSubredditPosts, subreddit_type } from "../api/redditApi";
+import { getSubredditPosts } from "../api/redditApi";
 import { AppDispatch, RootState } from ".";
+import { post } from "../types/types";
 
 const initialState = {
     posts: [],
     error:false,
     isLoading:false,
     searchTerm: '',
-    selectedSubreddit:'r/pic/'
+    selectedSubreddit:'/r/pics/'
 }
 
 
@@ -53,13 +54,13 @@ export default redditSlice.reducer
 
 
 // This is a Redux Thunk that gets posts from a subreddit.
-export const fetchPosts = (subreddit:subreddit_type) => async (dispatch:AppDispatch) => {
+export const fetchPosts = (subreddit:string) => async (dispatch:AppDispatch) => {
     try {
       dispatch(startGetPosts());
       const posts = await getSubredditPosts(subreddit);
   
       // We are adding showingComments and comments as additional fields to handle showing them when the user wants to. We need to do this because we need to call another API endpoint to get the comments for each post.
-      const postsWithMetadata = posts.map((post) => ({
+      const postsWithMetadata = posts.map((post:post) => ({
         ...post,
         showingComments: false,
         comments: [],
@@ -83,7 +84,7 @@ export const selectFilteredPosts = createSelector(
   [selectPosts, selectSearchTerm],
   (posts, searchTerm) => {
     if (searchTerm !== '') {
-      return posts.filter((post) =>
+      return posts.filter((post:post) =>
         post.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
